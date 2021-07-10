@@ -30,20 +30,36 @@ import java.io.IOException;
  */
 public class TestHttpClient {
 
-    public static void main(String[] args) throws IOException {
-        //1.打开http连接
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpGet httpGet = new HttpGet("http://127.0.0.1:8801");
-        CloseableHttpResponse response = httpClient.execute(httpGet);
-        if(response.getStatusLine().getStatusCode() == 200){
-            HttpEntity entity = response.getEntity();
-            // 使用工具类EntityUtils，从响应中取出实体表示的内容并转换成字符串
-            String string = EntityUtils.toString(entity, "utf-8");
-            System.out.println(string);
-        }
-        // 关闭资源
-        response.close();
-        httpClient.close();
+    public static void main(String[] args) {
+        httpGet("http://127.0.0.1:8801");
     }
+
+    public static String httpGet(String url) {
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpGet httpGet = new HttpGet(url);
+        CloseableHttpResponse response = null;
+        String result = null;
+        try {
+            response = httpClient.execute(httpGet);
+            if (response.getStatusLine().getStatusCode() == 200) {
+                HttpEntity entity = response.getEntity();
+                // 使用工具类EntityUtils，从响应中取出实体表示的内容并转换成字符串
+                result = EntityUtils.toString(entity, "utf-8");
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            // 关闭资源
+            try {
+                response.close();
+                httpClient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println(result);
+        return result;
+    }
+
 
 }
