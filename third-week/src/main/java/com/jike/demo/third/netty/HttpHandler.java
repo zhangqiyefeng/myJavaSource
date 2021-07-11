@@ -54,7 +54,7 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
         FullHttpResponse response = null;
         try {
             String value = body; // 对接上次作业的httpclient或者okhttp请求另一个url的响应数据
-            // 作业1 http客户端
+            // 作业1 http客户端（TestHttpClient在第二周的代码包里）
             value = TestHttpClient.httpGet("http://localhost:8801");
             // 作业2 netty客户端
             NettyHttpClient client = new NettyHttpClient();
