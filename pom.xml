@@ -19,6 +19,7 @@
         <module>fist-week</module>
         <module>second-week</module>
         <module>third-week</module>
+        <module>four-week</module>
     </modules>
 
     <dependencyManagement>
